@@ -28,6 +28,7 @@ Vocabulary:
         of a term within a particular document
 """
 
+from __future__ import absolute_import, division
 
 import math
 from collections import namedtuple
@@ -49,11 +50,29 @@ class Corpus(object):
         >>> c['doc1'] = 'Mary had a little lamb'
     """
 
-    def __init__(self, gramsize=1, all_ngrams=True, stopwords_file=None, stem=True):
-        """Optionally specify the word size of the ngrams."""
+    def __init__(self, gramsize=1, all_ngrams=True, language=None, preprocessor=None):
+        """Initalize.
+
+        Parameters:
+            gramsize (int): number of words in a keyword
+            all_ngrams (bool):
+                if True, return all possible ngrams of size "gramsize" and smaller.
+                else, only return keywords of exactly length "gramsize"
+            language (str):
+                Uses NLTK's stemmer and local stopwords files appropriately for the
+                language.
+                Check available languages with Preprocessor.supported_languages
+            preprocessor (object):
+                pass in a preprocessor object if you want to manually configure stemmer
+                and stopwords
+        """
         self.__documents = {}
         self.__gramsize = gramsize
-        self.preprocessor = Preprocessor(stopwords_file=stopwords_file, gramsize=gramsize, all_ngrams=all_ngrams)
+        if preprocessor:
+            self.preprocessor = preprocessor
+        else:
+            self.preprocessor = Preprocessor(
+                language=language, gramsize=gramsize, all_ngrams=all_ngrams)
 
     def __len__(self):
         """Length of a Corpus is the number of Documents it holds."""

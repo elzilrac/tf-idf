@@ -14,6 +14,8 @@ Example:
 
 """
 
+from __future__ import absolute_import, division
+
 import math
 import random
 
