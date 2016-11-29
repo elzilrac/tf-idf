@@ -43,8 +43,8 @@ setup(
         'Development Status :: 3 - Alpha',
 
         # Indicate who your project is intended for
-        'Intended Audience :: Data Scientists',
-        'Topic :: Text Mining :: Keyword Extraction',
+        'Intended Audience :: Developers',
+        'Topic :: Text Processing :: Indexing',
 
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
