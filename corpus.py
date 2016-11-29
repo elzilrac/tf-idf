@@ -29,8 +29,9 @@ Vocabulary:
 """
 
 
-from collections import namedtuple
 import math
+from collections import namedtuple
+
 from .document import Document
 from .preprocess import Preprocessor, clean_text
 
