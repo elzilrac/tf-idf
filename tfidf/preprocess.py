@@ -5,16 +5,24 @@
 Example:
     pp = Preprocesses()
 """
+from __future__ import with_statement
+from __future__ import absolute_import
+
 
 import re
 from collections import namedtuple
-from functools import lru_cache
+# from functools import lru_cache
 
 from html import unescape
+# python2 import HTMLParser
+# HTMLParser.HTMLParser().unescape
 
 from .keyword import Keyword
-from .porter2 import stem
+from nltk.stem import SnowballStemmer
+from stop_words import get_stop_words
 
+
+from cachetools import LRUCache, cached  # python2 support
 
 # from cachetools import LRUCache  # python2
 
@@ -94,8 +102,14 @@ class Preprocessor(object):
     stopwords = set()
     contractions = r"(n't|'s|'re)$"
     negative_gram_breaks = r'[^:;!^,\?\.\[|\]\(|\)"`]+'
+    supported_languages = (
+        'danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian',
+        'italian', 'kazakh', 'norwegian', 'porter', 'portuguese', 'romanian',
+        'russian', 'spanish', 'swedish', 'turkish'
+    )
 
-    def __init__(self, stopwords_file=None, stemmer=stem, gramsize=1, all_ngrams=True):
+    def __init__(self, language=None, gramsize=1, all_ngrams=True,
+                 stopwords_file=None, stemmer=None):
         """Preprocessor must be initalized for use if using stopwords.
 
         stopwords_file (filename): contains stopwords, one per line
@@ -111,10 +125,28 @@ class Preprocessor(object):
             Example:
             in the sentence "Although he saw the car, he ran across the street"
             "car he" may not be a bi-gram
+        stopwords_file (filename):
+            Provide a list of stopwords. If used in addition to "language", the
+            provided stopwords file overrides the default.
+        stemmer (function):
+            A function that takes in a single argument (str) and returns a string
+            as the stemmed word. Overrides the default behavior if specified.
+            Default None:
+                Use the NLTK snowball stemmer for the sepcified language. If
+                language is not found, no stemming will take place.
         """
+        if language:
+            assert language in self.supported_languages
+            if language in SnowballStemmer.languages:
+                sb_stemmer = SnowballStemmer(language)
+                self.__stemmer = sb_stemmer.stem
+            else:
+                self.__stemmer = lambda x: x  # no change to word
+            self.stopwords = get_stop_words(language)
         if stopwords_file:
             self._load_stopwords(stopwords_file)
-        self.__stemmer = stemmer
+        if stemmer:
+            self.__stemmer = stemmer
         self.__gramsize = gramsize
         self.__all_ngrams = all_ngrams
 
@@ -158,7 +190,7 @@ class Preprocessor(object):
         text = self.handle_stopwords(text)
         return self.stem_term(text)
 
-    @lru_cache(maxsize=10000)
+    @cached(LRUCache(maxsize=10000))
     def _stem(self, word):
         """The stem cache is used to cache up to 10,000 stemmed words.
 

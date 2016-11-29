@@ -5,6 +5,8 @@
 This class allows you to have stemmed keywords, but still see the original text.
 """
 
+from __future__ import absolute_import
+
 from collections import namedtuple
 
 Location = namedtuple('Location', ['document', 'start', 'end'])
