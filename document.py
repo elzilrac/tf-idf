@@ -14,25 +14,16 @@ Example:
 
 """
 
-# from collections import namedtuple
 import math
 import random
-# import re
 from .preprocess import clean_text
-# from .porter2 import stem
-# from .keyword import Keyword
 
 
 class Document(object):
     """A document holds text, slices text into ngrams, and calculates tf score.
 
     Attributes:
-        stop_words (list): TODO
         text (list): cleaned text, set on init
-        gram_breaks (regex): if a word ends with one of these characters, an
-            ngram may not cross that. Example:
-            in the sentence "Although he saw the car, he ran across the street"
-            "car he" may not be a bi-gram
     """
 
     def __init__(self, raw_text, preprocessor):

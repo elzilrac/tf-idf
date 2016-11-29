@@ -102,6 +102,12 @@ class Preprocessor(object):
             if true, all possible ngrams of length "gramsize" and smaller will
             be examined. If false, only ngrams of _exactly_ length "gramsize"
             will be run.
+        negative_gram_breaks (regex):
+            if a word ends with one of these characters, an
+            ngram may not cross that. Expressed as a _negative_ regex.
+            Example:
+            in the sentence "Although he saw the car, he ran across the street"
+            "car he" may not be a bi-gram
         """
         if stopwords_file:
             self._load_stopwords(stopwords_file)
