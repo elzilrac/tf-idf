@@ -3,12 +3,10 @@
 Blatantly copied from:
 https://github.com/pypa/sampleproject
 """
-
-# Always prefer setuptools over distutils
-from setuptools import setup, find_packages
-# To use a consistent encoding
-from codecs import open
+from codecs import open  # To use a consistent encoding
 from os import path
+from setuptools import setup, find_packages  # Always prefer setuptools over distutils
+import sys
 
 here = path.abspath(path.dirname(__file__))
 
@@ -16,9 +14,9 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-
 setup(
     name='tf-idf',
+    provides=['tfidf'],
 
     version='0.0.0',
 
@@ -65,8 +63,18 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['html', 'cachetools'],
+    install_requires=[
+        'cachetools',
+        'six',
+        'nltk',
+        'stop-words',
+    ],
 
+    # Additional requirements for development and testing
+    extras_require={
+        'dev': [],
+        'test': ['pytest', 'pytest-cov', 'pytest-pythonpath'],
+    }
 
     # TODO: PROPER DATA FILES HANDLING
     # # If there are data files included in your packages that need to be
