@@ -17,7 +17,7 @@ from html import unescape
 # python2 import HTMLParser
 # HTMLParser.HTMLParser().unescape
 
-from .keyword import Keyword
+from .dockeyword import Keyword
 from nltk.stem import SnowballStemmer
 from stop_words import get_stop_words
 
