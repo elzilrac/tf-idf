@@ -6,13 +6,16 @@ Example:
     pp = Preprocesses()
 """
 
-from collections import namedtuple
 import re
+from collections import namedtuple
+from functools import lru_cache
+
 from html import unescape
+
 from .keyword import Keyword
 from .porter2 import stem
 
-from functools import lru_cache
+
 # from cachetools import LRUCache  # python2
 
 

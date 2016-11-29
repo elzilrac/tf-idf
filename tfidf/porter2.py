@@ -9,7 +9,7 @@ in stemming.porter.
 """
 
 import re
- 
+
 r_exp = re.compile(r"[^aeiouy]*[aeiouy]+[^aeiouy](\w*)")
 ewss_exp1 = re.compile(r"^[aeiouy][^aeiouy]$")
 ewss_exp2 = re.compile(r".*[^aeiouy][aeiouy][^aeiouywxY]$")
