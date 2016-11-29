@@ -5,26 +5,19 @@
 Example:
     pp = Preprocesses()
 """
-from __future__ import with_statement
-from __future__ import absolute_import
-
+from __future__ import absolute_import, with_statement
 
 import re
 from collections import namedtuple
-# from functools import lru_cache
-
-from html import unescape
-# python2 import HTMLParser
-# HTMLParser.HTMLParser().unescape
-
-from .dockeyword import Keyword
-from nltk.stem import SnowballStemmer
-from stop_words import get_stop_words
-
 
 from cachetools import LRUCache, cached  # python2 support
+from nltk.stem import SnowballStemmer
+from six.moves.html_parser import HTMLParser  # python2 support
+from stop_words import get_stop_words
 
-# from cachetools import LRUCache  # python2
+from .dockeyword import Keyword
+
+unescape = HTMLParser().unescape
 
 
 def handle_unicode(text):

@@ -28,8 +28,7 @@ Vocabulary:
         of a term within a particular document
 """
 
-from __future__ import division
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 
 import math
 from collections import namedtuple
