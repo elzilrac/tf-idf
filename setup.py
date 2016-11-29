@@ -14,16 +14,6 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-install_requires = [
-    'cachetools',
-]
-
-dev_requires = install_requires + [
-    'pytest',
-    'pytest-cov',
-    'pytest-pythonpath',
-]
-
 setup(
     name='tf-idf',
     provides=['tfidf'],
