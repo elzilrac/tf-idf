@@ -89,7 +89,7 @@ class Preprocessor(object):
     """
 
     stopwords = set()
-    contractions = r"(n't|'s)$"
+    contractions = r"(n't|'s|'re)$"
     negative_gram_breaks = r'[^:;!^,\?\.\[|\]\(|\)"`]+'
 
     def __init__(self, stopwords_file=None, stemmer=stem, gramsize=1, all_ngrams=True):
