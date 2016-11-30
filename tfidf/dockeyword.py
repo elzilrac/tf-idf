@@ -56,4 +56,4 @@ class Keyword(object):
         return loc.document.text[loc.start:loc.end]
 
     def __str__(self):
-        return 'Stem:%s, Instances:%s, Count:%d' % (self.text, str(self.original_texts), len(self))
+        return u'Stem:%s, Instances:%s, Count:%d' % (self.text, str(self.original_texts), len(self))
