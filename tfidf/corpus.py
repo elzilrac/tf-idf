@@ -3,9 +3,9 @@
 """A Corpus is a collection of Documents. Calculates IDF and full TF-IDF.
 
 Vocabulary:
-    stem - to stem (or "stemming") is to conver to a word from the original
-        conjugated, plural, etc to a simpler form.
-            Example:
+    stem - to stem (or "stemming") is to convert to a word from the original
+        conjugated, plural, etc. to a simpler form.
+            Examples:
                 cats -> cats
                 winningly -> win
     term - a one or multi word string, no stemming
