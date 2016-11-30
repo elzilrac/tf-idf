@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding: utf-8
 
 """Pre processing step for text.
 
@@ -38,8 +39,8 @@ def handle_html_unquote(text):
 
 def handle_mac_quotes(text):
     """Handle the unfortunate non-ascii quotes OSX inserts."""
-    text = text.replace('“', '"').replace('”', '"')\
-        .replace('‘', "'").replace('’', "'")
+    text = text.replace(u'“', u'"').replace(u'”', u'"')\
+        .replace(u'‘', u"'").replace(u'’', u"'")
     return text
 
 

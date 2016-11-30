@@ -162,6 +162,6 @@ class Corpus(object):
         for ngram, kw in document.keywordset.items():
             score = document.tf(ngram, tf_weight=tf_weight) * \
                 self.idf(ngram, idf_weight=idf_weight)
-            out.append(Keyword(kw.get_first_text(), str(ngram), score))
+            out.append(Keyword(kw.get_first_text(), ngram, score))
         out.sort(key=lambda x: x.score, reverse=True)
         return out[:limit]
