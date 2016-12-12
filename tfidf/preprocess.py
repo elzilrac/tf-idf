@@ -63,14 +63,14 @@ def handle_text_break_dash(text):
 def clean_text(raw_text):
     """Strip text of non useful characters."""
     # Must strip HTML tags out first!
-    text = re.sub('<[^<]+?>', '', raw_text)
+    text = re.sub('<[^<]+?>', ' ', raw_text)
     text = handle_unicode(text)
     text = handle_html_unquote(text)
     text = handle_mac_quotes(text)
     text = handle_text_break_dash(text)
     text = text.lower()
 
-    regex_subs = ['\t\n\r', '\s+', '&']
+    regex_subs = ['\t', '\n', '\r', '\s+', '&']
     for regex_sub in regex_subs:
         text = re.sub(regex_sub, ' ', text)
     return text
@@ -94,7 +94,7 @@ class Preprocessor(object):
     """
 
     stopwords = set()
-    contractions = r"(n't|'s|'re)$"
+    contractions = r"(n't|'s|'re|'ll)$"
     negative_gram_breaks = r'[^:;!^,\?\.\[|\]\(|\)"`]+'
     supported_languages = (
         'danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian',

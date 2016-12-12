@@ -74,6 +74,10 @@ class Corpus(object):
             self.preprocessor = Preprocessor(
                 language=language, gramsize=gramsize, all_ngrams=all_ngrams)
 
+    def __contains__(self, document_id):
+        """A Corpus contains Document ids."""
+        return document_id in self.__documents
+
     def __len__(self):
         """Length of a Corpus is the number of Documents it holds."""
         return len(self.__documents)
