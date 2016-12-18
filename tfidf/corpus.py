@@ -36,7 +36,7 @@ from collections import namedtuple
 from .document import Document
 from .preprocess import Preprocessor, clean_text
 
-Keyword = namedtuple('Keyword', ['term', 'ngram', 'score'])
+CorpusKeyword = namedtuple('CorpusKeyword', ['term', 'ngram', 'score'])
 
 
 class Corpus(object):
@@ -124,7 +124,7 @@ class Corpus(object):
         num_doc_occurances = self.count_doc_occurances(ngram)
         return math.log(float(len(self) - num_doc_occurances) / num_doc_occurances)
 
-    def idf(self, ngram, idf_weight='smooth'):
+    def idf(self, ngram, idf_weight='basic'):
         """Inverse document frequency (IDF) indicates ngram common-ness across the Corpus."""
         if idf_weight == 'smooth':
             return self.idf_smooth(ngram)
@@ -150,7 +150,7 @@ class Corpus(object):
         else:
             ngram = term
         score = document.tf(ngram, tf_weight=tf_weight) * self.idf(ngram, idf_weight=idf_weight)
-        return Keyword(term, ngram, score)
+        return CorpusKeyword(document[ngram], ngram, score)
 
     def get_keywords(self, document_id=None, text=None, idf_weight='basic',
                      tf_weight='basic', limit=100):
@@ -166,6 +166,6 @@ class Corpus(object):
         for ngram, kw in document.keywordset.items():
             score = document.tf(ngram, tf_weight=tf_weight) * \
                 self.idf(ngram, idf_weight=idf_weight)
-            out.append(Keyword(kw.get_first_text(), ngram, score))
+            out.append(CorpusKeyword(kw, ngram, score))
         out.sort(key=lambda x: x.score, reverse=True)
         return out[:limit]

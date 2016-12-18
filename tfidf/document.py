@@ -49,7 +49,7 @@ class Document(object):
         return ngram in self.keywordset
 
     def __getitem__(self, ngram):
-        """Return the Keyword object with occurances via the stemmed ngram."""
+        """Return the DocKeyword object with occurances via the stemmed ngram."""
         return self.keywordset[ngram]
 
     def __len__(self):
@@ -108,7 +108,7 @@ class Document(object):
         term_frequency = self.tf_raw(ngram)
         return 0.5 + (0.5 * (term_frequency / self.max_raw_frequency))
 
-    def tf(self, ngram, tf_weight='norm_50', normalize=False):
+    def tf(self, ngram, tf_weight='basic', normalize=False):
         """Calculate term frequency.
 
         Normalizing (stemming) is slow, so it's assumed you're using the ngram.

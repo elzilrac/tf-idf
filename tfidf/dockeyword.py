@@ -12,7 +12,7 @@ from collections import namedtuple
 Location = namedtuple('Location', ['document', 'start', 'end'])
 
 
-class Keyword(object):
+class DocKeyword(object):
     def __init__(self, text, document=None, start=None, end=None):
         self.locations = set()
         self.text = text
@@ -25,7 +25,7 @@ class Keyword(object):
 
     def __add__(self, other):
         assert self.text == other.text
-        out = Keyword(self.text)
+        out = DocKeyword(self.text)
         out.locations = self.locations
         out.update_locations(other.locations)
         return out

@@ -15,8 +15,9 @@ from cachetools import LRUCache, cached  # python2 support
 from nltk.stem import SnowballStemmer
 from six.moves.html_parser import HTMLParser  # python2 support
 from stop_words import get_stop_words
+import sys  # python2 support
 
-from .dockeyword import Keyword
+from .dockeyword import DocKeyword
 
 unescape = HTMLParser().unescape
 
@@ -214,6 +215,9 @@ class Preprocessor(object):
             s = "All the cars were honking their horns."
             ['all', 'the', 'car', 'were', 'honk', 'their', 'horn']
         """
+        if sys.version_info[0] < 3:  # python2 support
+            if isinstance(raw_text, str):
+                raw_text = raw_text.decode('utf-8', 'ignore')
         gramlist = range(1, self.gramsize + 1) if self.all_ngrams else [self.gramsize]
 
         for sentence in positional_splitter(self.negative_gram_breaks, raw_text):
@@ -238,8 +242,8 @@ class Preprocessor(object):
                         word_text = ' '.join([self.stem_term(w.text) for w in word_list])
                         word_global_start = sentence.start + word_list[0].start
                         word_global_end = sentence.start + word_list[-1].end
-                        yield Keyword(word_text, document=document,
-                                      start=word_global_start, end=word_global_end)
+                        yield DocKeyword(word_text, document=document,
+                                         start=word_global_start, end=word_global_end)
         raise StopIteration
 
 
